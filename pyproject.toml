@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "building-footprint-extraction"
+version = "0.1.0"
+description = "Building footprint extraction from georeferenced point clouds and image annotations"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+occupancy = ["numpy", "open3d", "opencv-python-headless", "rasterio", "shapely"]
+metrics = ["numpy", "Pillow", "openpyxl", "opencv-python-headless"]
+
+[project.scripts]
+footprint = "footprint_tools.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.setuptools.package-data]
+"footprint_tools.configs" = ["default.json"]
