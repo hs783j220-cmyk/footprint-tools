@@ -42,13 +42,13 @@ footprint occupancy --ply scene.ply --annotations buildings.json --geotiff ortho
 
 ### Experiment configuration
 
-Each method has its own defaults in [configs/default.json](src/footprint_tools/configs/default.json). Pass a JSON object containing only the fields to override:
+Each method has its own defaults in [configs/default.json](src/footprint_tools/configs/default.json). Save the fields you want to override in a JSON file, such as `mask-config.json`:
 
 ```sh
-footprint occupancy --ply scene.ply --annotations buildings.json --geotiff orthophoto.tif --output-dir output --method mask --config examples/mask-config.json
+footprint occupancy --ply scene.ply --annotations buildings.json --geotiff orthophoto.tif --output-dir output --method mask --config mask-config.json
 ```
 
-The example changes whether per-building GeoTIFF crops are exported. Distances such as `step` and `layer_thickness` use metres. The effective parameters are recorded in the run configuration.
+For example, use `{"save_tif_crop": false}` to skip exporting per-building GeoTIFF crops. Distances such as `step` and `layer_thickness` use metres. The effective parameters are recorded in the run configuration.
 
 ## Evaluate outline predictions
 
@@ -58,18 +58,6 @@ footprint evaluate --ground-truth reference.png --prediction model-a.png model-b
 
 Use white-background PNGs with closed black outlines on the same pixel grid. The evaluator fills the outlines, computes overlap and boundary metrics, and writes an XLSX report with one row per prediction and an average row. The boundary IoU measures pixel overlap. Use `--allow-resize` only when both images represent the same extent and differ in resolution. See `footprint evaluate --help` for the threshold and debug options.
 
-## Try the synthetic example
-
-Run from the repository root after installing both sets of dependencies:
-
-```sh
-python examples/generate_demo.py output/demo
-footprint occupancy --ply output/demo/scene.ply --annotations output/demo/buildings.json --geotiff output/demo/orthophoto.tif --output-dir output/demo/occupancy --method mask --config examples/mask-config.json
-footprint evaluate --ground-truth output/demo/reference.png --prediction output/demo/prediction.png --output output/demo/metrics.xlsx
-```
-
-The generator creates a projected GeoTIFF, a synthetic PLY, a building annotation, and two aligned outline images. If you only installed the evaluation dependencies, add `--outlines-only` to the generator command and run the evaluation command.
-
 ## Project layout
 
 ```text
@@ -78,9 +66,6 @@ footprint-tools/
 ├── LICENSE
 ├── requirements.txt
 ├── pyproject.toml
-├── examples/
-│   ├── generate_demo.py
-│   └── mask-config.json
 └── src/footprint_tools/
     ├── algorithms/  # Four occupancy and contour methods
     ├── configs/     # Packaged method defaults and override validation
