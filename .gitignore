@@ -20,3 +20,5 @@ output/
 *.ckpt
 *.xlsx
 .env
+/data/
+/weights/

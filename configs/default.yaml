@@ -1,0 +1,32 @@
+register:
+  threshold: 0.5
+sam-candidates:
+  model_type: "vit_h"
+  device: "cpu"
+  point_spacing: 64
+  box_stride: 64
+  box_sizes: [128, 256, 512]
+  prompt_batch_size: 4
+prepare-samples:
+  buffer: 1.0
+  step: 0.1
+  interval: 0.5
+  max_slices: 32
+train:
+  epochs: 100
+  batch_size: 16
+  learning_rate: 0.0001
+  input_size: 128
+  model_width: 128
+  dropout: 0.1
+  token_grid: 8
+  seed: 42
+  device: "cpu"
+predict:
+  batch_size: 16
+  device: "cpu"
+extract:
+  dilation: 0.4
+  simplify: 0.2
+evaluate:
+  id_field: "group_id"
